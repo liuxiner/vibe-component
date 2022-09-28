@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <style>
+    .content-wrapper {
+      padding: 50px 10px;
+      height: 600px;
+    }
+
+    .content-wrapper-1 {
+      background-color: aliceblue;
+      border: 2px solid red;
+    }
+
+    .text {
+      opacity: 0.1;
+      font-weight: 500;
+      font-size: 40px;
+      line-height: 60px;
+      text-align: center;
+      transform: translateY(70px);
+    }
+
+    .is-active {
+      animation: 1s cubic-bezier(0.25, 0.2, 0, 0.99) TextAnimation both
+    }
+
+    @keyframes TextAnimation {
+      from {
+        opacity: 0;
+        transform: translateY(70px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(70px);
+      }
+    }
+  </style>
+  <div class="content-wrapper content-wrapper-1"></div>
+  <div class="content-wrapper">
+    <div class="text lines-1">BrainStorm</div>
+    <div class="text lines-2">Outline</div>
+    <div class="text lines-3">Rehearse</div>
+    <div class="text lines-4">Present</div>
+    <div class="text lines-5">All in one</div>
+  </div>
+  <div class="content-wrapper content-wrapper-1"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+  <script type="module">
+    gsap.registerPlugin(ScrollTrigger);
+    function addScrollTrigger(scrollName) {
+      const texts = document.querySelector(scrollName);
+      let timeline1 = gsap.timeline({
+        scrollTrigger: {
+          trigger: scrollName,
+          toggleActions: "restart none none none",
+          markers: true,
+          scrub: true,
+          start: "top 100%",
+          end: () => "+=" + document.querySelector(scrollName).offsetHeight,
+        }
+      })
+      timeline1.to(scrollName, {
+        y: 0,
+        opacity: 1,
+      })
+    }
+    for (let i = 1; i < 6; i++) {
+      addScrollTrigger('.lines-' + i);
+    }
+  </script>
+
+</body>
+
+</html>
